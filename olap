@@ -1,0 +1,480 @@
+aiktc@aiktc05:~$ mysql -u root -p
+Enter password: 
+ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+aiktc@aiktc05:~$ mysql -u root -p
+Enter password: 
+ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+aiktc@aiktc05:~$ mysql -u root -p
+Enter password: 
+ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+aiktc@aiktc05:~$ sudo mysql -u root -p
+[sudo] password for aiktc:  
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5
+Server version: 5.7.24-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database dwm;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| OLAP               |
+| dwm                |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| sys                |
++--------------------+
+7 rows in set (0.05 sec)
+
+mysql> use dwm;
+Database changed
+mysql> create table sales(int year, varchar country, varchar product, int profit);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int year, varchar country, varchar product, int profit)' at line 1
+mysql> create table sales(int sales_id primary key, int year, varchar country, varchar product, int profit);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int sales_id primary key, int year, varchar country, varchar product, int profit' at line 1
+mysql> create sales(int sales_id primary key, int year, varchar country, varchar product, int profit);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sales(int sales_id primary key, int year, varchar country, varchar product, int ' at line 1
+mysql> create table sales(sales_id int primary key,year int, country varchar, product varchar, profit int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' product varchar, profit int)' at line 1
+mysql> create table sales(sales_id int(5) primary key,year int(4), country varchar(25), product varchar(25), profit int(10));
+Query OK, 0 rows affected (0.81 sec)
+
+mysql> desc sales;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| sales_id | int(5)      | NO   | PRI | NULL    |       |
+| year     | int(4)      | YES  |     | NULL    |       |
+| country  | varchar(25) | YES  |     | NULL    |       |
+| product  | varchar(25) | YES  |     | NULL    |       |
+| profit   | int(10)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> insert into sales values(1,2016,'India','Book',12000);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into sales values(2,2014,'India','Pen',22000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into sales values(3,2017,'India','Bag',25000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into sales values(4,2015,'India','Bottle',23050);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> drop table sales;
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> create table sales(year int(4), country varchar(25), product varchar(25), profit int(10), primary key(year,country,product));
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> desc sales;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| year    | int(4)      | NO   | PRI | NULL    |       |
+| country | varchar(25) | NO   | PRI | NULL    |       |
+| product | varchar(25) | NO   | PRI | NULL    |       |
+| profit  | int(10)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into sales values(2016,'India','Book',12000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into sales values(2014,'India','Pen',22000);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into sales values(2017,'India','Bag',25000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into sales values(2015,'India','Bottle',23050);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into sales values(2012,'India','Marker',24000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into sales values(2018,'India','Chocolate',32000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into sales values(2018,'China','Chocolate',25000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into sales values(2014,'China','Marker',15700);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sales values(2011,'China','Bottle',21200);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into sales values(2015,'China','Bag',41000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into sales values(2019,'China','Toys',50000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sales values(2012,'China','Earring',20000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sales values(2016,'USA','Book',12500);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into sales values(2014,'USA','Pen',12340);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sales values(2015,'USA','Bag',25000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> delete from sales where product='Book' and country='USA' and year=2016;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> delete from sales where product='Pen' and country='USA' and year=2014;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sales values(2016,'USA','Bottle',12500);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into sales values(2014,'USA','Marker',12340);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into sales values(2013,'USA','Chocolate',41000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into sales values(2011,'USA','Scarf',20202);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into sales values(2012,'USA','Glass',24600);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from sales;
++------+---------+-----------+--------+
+| year | country | product   | profit |
++------+---------+-----------+--------+
+| 2011 | China   | Bottle    |  21200 |
+| 2011 | USA     | Scarf     |  20202 |
+| 2012 | China   | Earring   |  20000 |
+| 2012 | India   | Marker    |  24000 |
+| 2012 | USA     | Glass     |  24600 |
+| 2013 | USA     | Chocolate |  41000 |
+| 2014 | China   | Marker    |  15700 |
+| 2014 | India   | Pen       |  22000 |
+| 2014 | USA     | Marker    |  12340 |
+| 2015 | China   | Bag       |  41000 |
+| 2015 | India   | Bottle    |  23050 |
+| 2015 | USA     | Bag       |  25000 |
+| 2016 | India   | Book      |  12000 |
+| 2016 | USA     | Bottle    |  12500 |
+| 2017 | India   | Bag       |  25000 |
+| 2018 | China   | Chocolate |  25000 |
+| 2018 | India   | Chocolate |  32000 |
+| 2019 | China   | Toys      |  50000 |
++------+---------+-----------+--------+
+18 rows in set (0.00 sec)
+
+mysql> insert into sales values(2011,'Russia','Chocolate',30000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sales values(2016,'Russia','Marker',34340);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sales values(2017,'Russia','Bottle',51000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into sales values(2014,'Russia','Bag',23100);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sales values(2018,'Russia','Shoes',15800);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sales values(2013,'Russia','Chair',18050);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from sales;
++------+---------+-----------+--------+
+| year | country | product   | profit |
++------+---------+-----------+--------+
+| 2011 | China   | Bottle    |  21200 |
+| 2011 | Russia  | Chocolate |  30000 |
+| 2011 | USA     | Scarf     |  20202 |
+| 2012 | China   | Earring   |  20000 |
+| 2012 | India   | Marker    |  24000 |
+| 2012 | USA     | Glass     |  24600 |
+| 2013 | Russia  | Chair     |  18050 |
+| 2013 | USA     | Chocolate |  41000 |
+| 2014 | China   | Marker    |  15700 |
+| 2014 | India   | Pen       |  22000 |
+| 2014 | Russia  | Bag       |  23100 |
+| 2014 | USA     | Marker    |  12340 |
+| 2015 | China   | Bag       |  41000 |
+| 2015 | India   | Bottle    |  23050 |
+| 2015 | USA     | Bag       |  25000 |
+| 2016 | India   | Book      |  12000 |
+| 2016 | Russia  | Marker    |  34340 |
+| 2016 | USA     | Bottle    |  12500 |
+| 2017 | India   | Bag       |  25000 |
+| 2017 | Russia  | Bottle    |  51000 |
+| 2018 | China   | Chocolate |  25000 |
+| 2018 | India   | Chocolate |  32000 |
+| 2018 | Russia  | Shoes     |  15800 |
+| 2019 | China   | Toys      |  50000 |
++------+---------+-----------+--------+
+24 rows in set (0.00 sec)
+
+mysql> select sum(profit) as totalprofit from sales where year in(select distinct(year) from sales);
++-------------+
+| totalprofit |
++-------------+
+|      618882 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(profit) as totalprofit from sales where distinct(year) in(select distinct(year) from sales);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'distinct(year) in(select distinct(year) from sales)' at line 1
+mysql> select distinct(year),sum(profit) as totalprofit from sales groupby year;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'year' at line 1
+mysql> select distinct(year),sum(profit) as totalprofit from sales group by year;
++------+-------------+
+| year | totalprofit |
++------+-------------+
+| 2011 |       71402 |
+| 2012 |       68600 |
+| 2013 |       59050 |
+| 2014 |       73140 |
+| 2015 |       89050 |
+| 2016 |       58840 |
+| 2017 |       76000 |
+| 2018 |       72800 |
+| 2019 |       50000 |
++------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> select year,sum(profit) as totalprofit from sales group by year;
++------+-------------+
+| year | totalprofit |
++------+-------------+
+| 2011 |       71402 |
+| 2012 |       68600 |
+| 2013 |       59050 |
+| 2014 |       73140 |
+| 2015 |       89050 |
+| 2016 |       58840 |
+| 2017 |       76000 |
+| 2018 |       72800 |
+| 2019 |       50000 |
++------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> select year,sum(profit) as totalprofit from sales group by year with rollup;
++------+-------------+
+| year | totalprofit |
++------+-------------+
+| 2011 |       71402 |
+| 2012 |       68600 |
+| 2013 |       59050 |
+| 2014 |       73140 |
+| 2015 |       89050 |
+| 2016 |       58840 |
+| 2017 |       76000 |
+| 2018 |       72800 |
+| 2019 |       50000 |
+| NULL |      618882 |
++------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> select year,country,sum(profit) as totalprofit from sales group by year,country with rollup;
++------+---------+-------------+
+| year | country | totalprofit |
++------+---------+-------------+
+| 2011 | China   |       21200 |
+| 2011 | Russia  |       30000 |
+| 2011 | USA     |       20202 |
+| 2011 | NULL    |       71402 |
+| 2012 | China   |       20000 |
+| 2012 | India   |       24000 |
+| 2012 | USA     |       24600 |
+| 2012 | NULL    |       68600 |
+| 2013 | Russia  |       18050 |
+| 2013 | USA     |       41000 |
+| 2013 | NULL    |       59050 |
+| 2014 | China   |       15700 |
+| 2014 | India   |       22000 |
+| 2014 | Russia  |       23100 |
+| 2014 | USA     |       12340 |
+| 2014 | NULL    |       73140 |
+| 2015 | China   |       41000 |
+| 2015 | India   |       23050 |
+| 2015 | USA     |       25000 |
+| 2015 | NULL    |       89050 |
+| 2016 | India   |       12000 |
+| 2016 | Russia  |       34340 |
+| 2016 | USA     |       12500 |
+| 2016 | NULL    |       58840 |
+| 2017 | India   |       25000 |
+| 2017 | Russia  |       51000 |
+| 2017 | NULL    |       76000 |
+| 2018 | China   |       25000 |
+| 2018 | India   |       32000 |
+| 2018 | Russia  |       15800 |
+| 2018 | NULL    |       72800 |
+| 2019 | China   |       50000 |
+| 2019 | NULL    |       50000 |
+| NULL | NULL    |      618882 |
++------+---------+-------------+
+34 rows in set (0.00 sec)
+
+mysql> select year,country,product,sum(profit) as totalprofit from sales group by year,country,product with rollup;
++------+---------+-----------+-------------+
+| year | country | product   | totalprofit |
++------+---------+-----------+-------------+
+| 2011 | China   | Bottle    |       21200 |
+| 2011 | China   | NULL      |       21200 |
+| 2011 | Russia  | Chocolate |       30000 |
+| 2011 | Russia  | NULL      |       30000 |
+| 2011 | USA     | Scarf     |       20202 |
+| 2011 | USA     | NULL      |       20202 |
+| 2011 | NULL    | NULL      |       71402 |
+| 2012 | China   | Earring   |       20000 |
+| 2012 | China   | NULL      |       20000 |
+| 2012 | India   | Marker    |       24000 |
+| 2012 | India   | NULL      |       24000 |
+| 2012 | USA     | Glass     |       24600 |
+| 2012 | USA     | NULL      |       24600 |
+| 2012 | NULL    | NULL      |       68600 |
+| 2013 | Russia  | Chair     |       18050 |
+| 2013 | Russia  | NULL      |       18050 |
+| 2013 | USA     | Chocolate |       41000 |
+| 2013 | USA     | NULL      |       41000 |
+| 2013 | NULL    | NULL      |       59050 |
+| 2014 | China   | Marker    |       15700 |
+| 2014 | China   | NULL      |       15700 |
+| 2014 | India   | Pen       |       22000 |
+| 2014 | India   | NULL      |       22000 |
+| 2014 | Russia  | Bag       |       23100 |
+| 2014 | Russia  | NULL      |       23100 |
+| 2014 | USA     | Marker    |       12340 |
+| 2014 | USA     | NULL      |       12340 |
+| 2014 | NULL    | NULL      |       73140 |
+| 2015 | China   | Bag       |       41000 |
+| 2015 | China   | NULL      |       41000 |
+| 2015 | India   | Bottle    |       23050 |
+| 2015 | India   | NULL      |       23050 |
+| 2015 | USA     | Bag       |       25000 |
+| 2015 | USA     | NULL      |       25000 |
+| 2015 | NULL    | NULL      |       89050 |
+| 2016 | India   | Book      |       12000 |
+| 2016 | India   | NULL      |       12000 |
+| 2016 | Russia  | Marker    |       34340 |
+| 2016 | Russia  | NULL      |       34340 |
+| 2016 | USA     | Bottle    |       12500 |
+| 2016 | USA     | NULL      |       12500 |
+| 2016 | NULL    | NULL      |       58840 |
+| 2017 | India   | Bag       |       25000 |
+| 2017 | India   | NULL      |       25000 |
+| 2017 | Russia  | Bottle    |       51000 |
+| 2017 | Russia  | NULL      |       51000 |
+| 2017 | NULL    | NULL      |       76000 |
+| 2018 | China   | Chocolate |       25000 |
+| 2018 | China   | NULL      |       25000 |
+| 2018 | India   | Chocolate |       32000 |
+| 2018 | India   | NULL      |       32000 |
+| 2018 | Russia  | Shoes     |       15800 |
+| 2018 | Russia  | NULL      |       15800 |
+| 2018 | NULL    | NULL      |       72800 |
+| 2019 | China   | Toys      |       50000 |
+| 2019 | China   | NULL      |       50000 |
+| 2019 | NULL    | NULL      |       50000 |
+| NULL | NULL    | NULL      |      618882 |
++------+---------+-----------+-------------+
+58 rows in set (0.00 sec)
+
+mysql> select * from sales where year=2017;
++------+---------+---------+--------+
+| year | country | product | profit |
++------+---------+---------+--------+
+| 2017 | India   | Bag     |  25000 |
+| 2017 | Russia  | Bottle  |  51000 |
++------+---------+---------+--------+
+2 rows in set (0.03 sec)
+
+mysql> select year,country,product,sum(profit) as totalprofit from sales where year=(2017 or 2018) and country=('India' or 'China') group by year,country,product with rollup;
+Empty set (0.02 sec)
+
+mysql> select year,country,product,sum(profit) as totalprofit from sales where year=(2017 or 2018) and country=('India' or 'Russia') group by year,country,product with rollup;
+Empty set (0.01 sec)
+
+mysql> select * from sales where year='2017 or 2018' and country=('India' or 'Russia') ;
++------+---------+---------+--------+
+| year | country | product | profit |
++------+---------+---------+--------+
+| 2017 | India   | Bag     |  25000 |
+| 2017 | Russia  | Bottle  |  51000 |
++------+---------+---------+--------+
+2 rows in set, 4 warnings (0.00 sec)
+
+mysql> select * from sales where year='2017 and 2018' and country=('India' and 'Russia') ;
++------+---------+---------+--------+
+| year | country | product | profit |
++------+---------+---------+--------+
+| 2017 | India   | Bag     |  25000 |
+| 2017 | Russia  | Bottle  |  51000 |
++------+---------+---------+--------+
+2 rows in set, 3 warnings (0.00 sec)
+
+mysql> select year,country,product,sum(profit) as totalprofit from sales where (year=2017 or year=2018) and (country='India' or country='Russia') group by year,country,product with rollup;
++------+---------+-----------+-------------+
+| year | country | product   | totalprofit |
++------+---------+-----------+-------------+
+| 2017 | India   | Bag       |       25000 |
+| 2017 | India   | NULL      |       25000 |
+| 2017 | Russia  | Bottle    |       51000 |
+| 2017 | Russia  | NULL      |       51000 |
+| 2017 | NULL    | NULL      |       76000 |
+| 2018 | India   | Chocolate |       32000 |
+| 2018 | India   | NULL      |       32000 |
+| 2018 | Russia  | Shoes     |       15800 |
+| 2018 | Russia  | NULL      |       15800 |
+| 2018 | NULL    | NULL      |       47800 |
+| NULL | NULL    | NULL      |      123800 |
++------+---------+-----------+-------------+
+11 rows in set (0.00 sec)
+
+mysql> select country,
+    -> sum(IF(product='Chocolate',profit,NULL)) as 'Chocolate',
+    -> sum(IF(product='Marker',profit,NULL)) as 'Marker',
+    -> sum(IF(product='Bottle',profit,NULL)) as 'Bottle',
+    -> sum(IF(product='Bag',profit,NULL)) as 'Bag',
+    -> sum(IF(product='Book',profit,NULL)) as 'Book',
+    -> sum(IF(product='Pen',profit,NULL)) as 'Pen',
+    -> sum(IF(product='Scarf',profit,NULL)) as 'Scarf',
+    -> sum(IF(product='Earing',profit,NULL)) as 'Earing',
+    -> sum(IF(product='Toys',profit,NULL)) as 'Toys',
+    -> sum(IF(product='Shoes',profit,NULL)) as 'Shoes',
+    -> sum(IF(product='Glass',profit,NULL)) as 'Glass',
+    -> sum(IF(product='Chair',profit,NULL)) as 'Chair'
+    -> from sales
+    -> group by country;
++---------+-----------+--------+--------+-------+-------+-------+-------+--------+-------+-------+-------+-------+
+| country | Chocolate | Marker | Bottle | Bag   | Book  | Pen   | Scarf | Earing | Toys  | Shoes | Glass | Chair |
++---------+-----------+--------+--------+-------+-------+-------+-------+--------+-------+-------+-------+-------+
+| China   |     25000 |  15700 |  21200 | 41000 |  NULL |  NULL |  NULL |   NULL | 50000 |  NULL |  NULL |  NULL |
+| India   |     32000 |  24000 |  23050 | 25000 | 12000 | 22000 |  NULL |   NULL |  NULL |  NULL |  NULL |  NULL |
+| Russia  |     30000 |  34340 |  51000 | 23100 |  NULL |  NULL |  NULL |   NULL |  NULL | 15800 |  NULL | 18050 |
+| USA     |     41000 |  12340 |  12500 | 25000 |  NULL |  NULL | 20202 |   NULL |  NULL |  NULL | 24600 |  NULL |
++---------+-----------+--------+--------+-------+-------+-------+-------+--------+-------+-------+-------+-------+
+4 rows in set (0.00 sec)
+
+mysql> 
+
